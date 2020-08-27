@@ -15,5 +15,20 @@ module.exports = function () {
     lang,
     locale,
     translated,
+    eleventyComputed: {
+      permalink: (data) => {
+        if (data.permalink) {
+          return data.permalink.replace(
+            /^\/{{lang}}/,
+            '/localized-files/{{lang}}',
+          );
+        }
+
+        return data.page.inputPath
+          .replace(/^.\/src\/site\/content/, '')
+          .replace(/index.(md|njk)$/, '')
+          .replace(/^\/pl\//, '/localized-files/pl/');
+      },
+    },
   };
 };
